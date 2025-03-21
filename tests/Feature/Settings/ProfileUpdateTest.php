@@ -61,13 +61,9 @@ test('email verification status is unchanged when the email address is unchanged
 
 test('user can delete their account', function () {
     $user = User::factory()->create();
-    $url = 'settings/profile';
 
-    $this->actingAs($user)->get($url);
-
-    $response = $this
-        ->actingAs($user)
-        ->delete($url, [
+    $response = test()->actingAs($user)
+        ->delete('settings/profile', [
             'password' => 'password',
             '_token' => session('_token'),
         ]);
@@ -76,12 +72,14 @@ test('user can delete their account', function () {
         ->assertSessionHasNoErrors()
         ->assertRedirect('/');
 
-    $this->assertGuest();
+    expect($user)
+        ->not->toBeNull()
+        ->and(auth()->check())->toBeFalse();
 
     // Verify soft deletion
-    $this->assertSoftDeleted('users', ['id' => $user->id]);
-    $this->assertNotNull(User::withTrashed()->find($user->id));
-    $this->assertNull(User::find($user->id));
+    test()->assertSoftDeleted('users', ['id' => $user->id]);
+    expect(User::withTrashed()->find($user->id))->not->toBeNull()
+        ->and(User::find($user->id))->toBeNull();
 });
 
 test('correct password must be provided to delete account', function () {

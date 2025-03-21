@@ -1,193 +1,132 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers;
-
 use App\Enums\RolesEnum;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Hash;
-use Tests\TestCase;
 
-class UserControllerTest extends TestCase {
-    use RefreshDatabase;
+uses(RefreshDatabase::class);
 
-    private User $admin;
+beforeEach(function () {
+    // Run the role seeder first
+    $this->seed(\Database\Seeders\RolesAndPermissionsSeeder::class);
 
-    private User $userManager;
+    // Create admin user
+    $this->admin = User::factory()->create([
+        'email' => 'admin@example.com',
+        'name' => 'Admin User',
+    ])->assignRole(RolesEnum::ADMINISTRATOR->value);
 
-    private User $regularUser;
+    // Create user manager
+    $this->userManager = User::factory()->create([
+        'email' => 'user_manager@example.com',
+        'name' => 'User Manager',
+    ])->assignRole(RolesEnum::USER_MANAGER->value);
 
-    protected function setUp(): void {
-        parent::setUp();
+    // Create registered user
+    $this->regularUser = User::factory()->create([
+        'email' => 'registered_user@example.com',
+        'name' => 'Registered User',
+    ])->assignRole(RolesEnum::REGISTERED_USER->value);
+});
 
-        // Run the role seeder first
-        $this->seed(\Database\Seeders\RolesAndPermissionsSeeder::class);
-
-        $password = 'password';
-
-        // Create admin user
-        $this->admin = User::updateOrCreate(
-            ['email' => 'admin@example.com'],
-            [
-                'name' => 'Admin User',
-                'password' => Hash::make($password),
-            ]
-        );
-        $this->admin->assignRole(RolesEnum::ADMINISTRATOR->value);
-
-        // Create user manager
-        $this->userManager = User::updateOrCreate(
-            ['email' => 'user_manager@example.com'],
-            [
-                'name' => 'User Manager',
-                'password' => Hash::make($password),
-            ]
-        );
-        $this->userManager->assignRole(RolesEnum::USER_MANAGER->value);
-
-        // Create registered user
-        $this->regularUser = User::updateOrCreate(
-            ['email' => 'registered_user@example.com'],
-            [
-                'name' => 'Registered User',
-                'password' => Hash::make($password),
-            ]
-        );
-        $this->regularUser->assignRole(RolesEnum::REGISTERED_USER->value);
-    }
-
-    public function test_index_shows_users_list_to_authorized_users(): void {
-        $response = $this->actingAs($this->admin)->get(route('users.index'));
-        $response->assertStatus(200);
-        $response->assertInertia(
-            fn ($page) => $page
-                ->component('users/index')
-                ->has('users')
+test('index shows users list to authorized users', function () {
+    // Admin can view users
+    $response = test()->actingAs($this->admin)->get(route('users.index'));
+    $response->assertStatus(200)
+        ->assertInertia(fn ($page) => $page
+            ->component('users/index')
+            ->has('users')
         );
 
-        $response = $this->actingAs($this->userManager)->get(route('users.index'));
-        $response->assertStatus(200);
+    // User manager can view users
+    test()->actingAs($this->userManager)
+        ->get(route('users.index'))
+        ->assertStatus(200);
 
-        $response = $this->actingAs($this->regularUser)->get(route('users.index'));
-        $response->assertStatus(403);
-    }
+    // Regular user cannot view users
+    test()->actingAs($this->regularUser)
+        ->get(route('users.index'))
+        ->assertStatus(403);
+});
 
-    public function test_create_shows_form_to_authorized_users(): void {
-        $response = $this->actingAs($this->admin)->get(route('users.create'));
-        $response->assertStatus(200);
-        $response->assertInertia(
-            fn ($page) => $page
-                ->component('users/create')
-                ->has('roles')
+test('create shows form to authorized users', function () {
+    // Admin can view create form
+    $response = test()->actingAs($this->admin)->get(route('users.create'));
+    $response->assertStatus(200)
+        ->assertInertia(fn ($page) => $page
+            ->component('users/create')
+            ->has('roles')
         );
 
-        $response = $this->actingAs($this->userManager)->get(route('users.create'));
-        $response->assertStatus(200);
+    // User manager can view create form
+    test()->actingAs($this->userManager)
+        ->get(route('users.create'))
+        ->assertStatus(200);
 
-        $response = $this->actingAs($this->regularUser)->get(route('users.create'));
-        $response->assertStatus(403);
-    }
+    // Regular user cannot view create form
+    test()->actingAs($this->regularUser)
+        ->get(route('users.create'))
+        ->assertStatus(403);
+});
 
-    public function test_store_creates_new_user(): void {
-        $this->actingAs($this->admin)->get(route('users.create'));
+test('store creates new user', function () {
+    test()->actingAs($this->admin)->get(route('users.create'));
 
-        $userData = [
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => 'password',
-            'password_confirmation' => 'password',
-            'role' => RolesEnum::REGISTERED_USER->value,
-            '_token' => session('_token'),
-        ];
+    $userData = [
+        'name' => 'Test User',
+        'email' => 'test@example.com',
+        'password' => 'password',
+        'password_confirmation' => 'password',
+        'role' => RolesEnum::REGISTERED_USER->value,
+        '_token' => session('_token'),
+    ];
 
-        $response = $this->post(route('users.store'), $userData);
+    $response = test()->post(route('users.store'), $userData);
 
-        $response->assertRedirect(route('users.index'));
-        $this->assertDatabaseHas('users', [
-            'email' => 'test@example.com',
-            'name' => 'Test User',
-        ]);
+    $response->assertRedirect(route('users.index'));
 
-        $user = User::where('email', 'test@example.com')->first();
-        $this->assertTrue($user->hasRole(RolesEnum::REGISTERED_USER->value));
-    }
+    $user = User::where('email', 'test@example.com')->first();
 
-    public function test_edit_shows_form_to_authorized_users(): void {
-        $user = User::factory()->create();
+    expect($user)
+        ->name->toBe('Test User')
+        ->and($user->hasRole(RolesEnum::REGISTERED_USER->value))->toBeTrue();
+});
 
-        $response = $this->actingAs($this->admin)->get(route('users.edit', $user));
-        $response->assertStatus(200);
-        $response->assertInertia(
-            fn ($page) => $page
-                ->component('users/edit')
-                ->has('user')
-                ->has('roles')
-        );
+test('user manager cannot modify admin', function () {
+    // Create an admin user to be modified
+    $adminToModify = User::factory()->create();
+    $adminToModify->syncRoles([RolesEnum::ADMINISTRATOR->value]);
 
-        $response = $this->actingAs($this->userManager)->get(route('users.edit', $user));
-        $response->assertStatus(200);
+    test()->actingAs($this->userManager)
+        ->get(route('users.edit', $adminToModify));
 
-        $response = $this->actingAs($this->regularUser)->get(route('users.edit', $user));
-        $response->assertStatus(403);
-    }
+    $response = test()->put(route('users.update', $adminToModify), [
+        'name' => 'Updated Name',
+        'email' => $adminToModify->email,
+        'role' => RolesEnum::ADMINISTRATOR->value,
+        '_token' => session('_token'),
+    ]);
 
-    public function test_update_modifies_existing_user(): void {
-        $user = User::factory()->create();
+    $response->assertStatus(403);
 
-        $this->actingAs($this->admin)->get(route('users.edit', $user));
-        $response = $this->put(route('users.update', $user), [
-            'name' => 'Updated Name',
-            'email' => $user->email,
-            'role' => RolesEnum::REGISTERED_USER->value,
-            '_token' => session('_token'),
-        ]);
+    expect(User::find($adminToModify->id))
+        ->name->not->toBe('Updated Name');
+});
 
-        $response->assertRedirect(route('users.index'));
-        $this->assertDatabaseHas('users', [
-            'id' => $user->id,
-            'name' => 'Updated Name',
-        ]);
-    }
+test('soft deletes user', function () {
+    $user = User::factory()->create();
 
-    public function test_destroy_soft_deletes_user(): void {
-        $user = User::factory()->create();
+    test()->actingAs($this->admin)
+        ->get(route('users.index'));
 
-        $this->actingAs($this->admin)
-            ->get(route('users.index')); // Get page first to establish session
+    $response = test()->delete(route('users.destroy', $user), [
+        '_token' => session('_token'),
+    ]);
 
-        $response = $this->delete(route('users.destroy', $user), [
-            '_token' => session('_token'),
-        ]);
+    $response->assertStatus(302);
 
-        $response->assertStatus(302);
+    test()->assertSoftDeleted('users', ['id' => $user->id]);
 
-        // Check that the user is soft deleted but still exists
-        $this->assertSoftDeleted('users', ['id' => $user->id]);
-
-        // Verify we can still find the user with withTrashed()
-        $this->assertNotNull(User::withTrashed()->find($user->id));
-
-        // Verify the user is not in the default query scope
-        $this->assertNull(User::find($user->id));
-    }
-
-    public function test_user_manager_cannot_modify_admin(): void {
-        // Create an admin user to be modified
-        $adminToModify = User::factory()->create();
-        $adminToModify->syncRoles([RolesEnum::ADMINISTRATOR->value]);
-
-        // Get page first to establish session
-        $this->actingAs($this->userManager)
-            ->get(route('users.edit', $adminToModify));  // Get the edit page specifically
-
-        // Try to modify the admin as user manager
-        $response = $this->put(route('users.update', $adminToModify), [
-            'name' => 'Updated Name',
-            'email' => $adminToModify->email,
-            'role' => RolesEnum::ADMINISTRATOR->value,
-            '_token' => session('_token'),
-        ]);
-
-        $response->assertStatus(403);
-    }
-}
+    expect(User::withTrashed()->find($user->id))->not->toBeNull()
+        ->and(User::find($user->id))->toBeNull();
+});
