@@ -1,0 +1,63 @@
+/* Font uses */
+@use '@fontsource-utils/scss' as Fontsource;
+
+// Custom export of Source Sans 3
+@include Fontsource.faces(
+	$metadata: (
+		id: 'source-sans-3',
+		family: 'Source Sans 3 Variable',
+		subsets: (
+			latin,
+			latin-ext,
+			greek,
+			cyrillic,
+		),
+		variable: true,
+		display: swap,
+		path: '@fontsource-variable/source-sans-3/files',
+	)
+);
+
+// Custom export of Quicksand
+@include Fontsource.faces(
+	$metadata: (
+		id: 'quicksand',
+		family: 'Quicksand Variable',
+		subsets: (
+			latin,
+			latin-ext,
+		),
+		variable: true,
+		display: swap,
+		path: '@fontsource-variable/quicksand/files',
+	)
+);
+
+// Custom export of Montserrat
+@include Fontsource.faces(
+	$metadata: (
+		id: 'montserrat',
+		family: 'Montserrat Variable',
+		subsets: (
+			latin,
+		),
+		variable: true,
+		display: swap,
+		path: '@fontsource-variable/montserrat/files',
+	)
+);
+
+// Custom export of Fira Code
+@include Fontsource.faces(
+	$metadata: (
+		id: 'fira-code',
+		family: 'Fira Code',
+		subsets: (
+			latin,
+			latin-ext,
+		),
+		variable: true,
+		display: swap,
+		path: '@fontsource-variable/fira-code/files',
+	)
+);
