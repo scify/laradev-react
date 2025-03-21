@@ -149,7 +149,7 @@ class UserControllerTest extends TestCase {
         ]);
     }
 
-    public function test_destroy_deletes_user(): void {
+    public function test_destroy_soft_deletes_user(): void {
         $user = User::factory()->create();
 
         $this->actingAs($this->admin)
@@ -160,7 +160,15 @@ class UserControllerTest extends TestCase {
         ]);
 
         $response->assertStatus(302);
-        $this->assertDatabaseMissing('users', ['id' => $user->id]);
+
+        // Check that the user is soft deleted but still exists
+        $this->assertSoftDeleted('users', ['id' => $user->id]);
+
+        // Verify we can still find the user with withTrashed()
+        $this->assertNotNull(User::withTrashed()->find($user->id));
+
+        // Verify the user is not in the default query scope
+        $this->assertNull(User::find($user->id));
     }
 
     public function test_user_manager_cannot_modify_admin(): void {
