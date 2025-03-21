@@ -45,8 +45,6 @@ export function UserForm({ user, action, roles }: UserFormProps) {
 		}
 	};
 
-	console.log(roles);
-
 	return (
 		<form onSubmit={handleSubmit} className="space-y-4">
 			<div>

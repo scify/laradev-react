@@ -9,7 +9,6 @@ interface ShowUserProps extends PageProps {
 
 export default function Show({ user }: ShowUserProps) {
 	const { t } = useTranslations();
-	console.log(user);
 
 	return (
 		<AppSidebarLayout
