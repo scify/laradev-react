@@ -8,22 +8,27 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Support\Env;
 
-// Step 1: Load the main .env file
-$dotenv = Dotenv\Dotenv::createMutable(dirname(__DIR__));
-$dotenv->load();
+// Only load .env if APP_ENV isn't already set
+if (getenv('APP_ENV') !== 'testing') {
+    // Step 1: Load the main .env file
+    $dotenv = Dotenv\Dotenv::createMutable(dirname(__DIR__));
+    $dotenv->load();
 
-// Step 2: Only load additional .env file if APP_DEVELOPMENT_ENV is set
-$developmentEnv = Env::get('APP_DEVELOPMENT_ENV');
+    // Step 2: Only load additional .env file if APP_DEVELOPMENT_ENV is set
+    $developmentEnv = Env::get('APP_DEVELOPMENT_ENV');
 
-if ($developmentEnv) {
-    $additionalEnvFile = ".env.{$developmentEnv}";
-    $additionalEnvPath = dirname(__DIR__) . "/{$additionalEnvFile}";
+    if ($developmentEnv) {
+        $additionalEnvFile = ".env.{$developmentEnv}";
+        $additionalEnvPath = dirname(__DIR__) . "/{$additionalEnvFile}";
 
-    if (file_exists($additionalEnvPath)) {
-        $dotenv = Dotenv\Dotenv::createMutable(dirname(__DIR__), $additionalEnvFile);
-        $dotenv->load();
+        if (file_exists($additionalEnvPath)) {
+            $dotenv = Dotenv\Dotenv::createMutable(dirname(__DIR__), $additionalEnvFile);
+            $dotenv->load();
+        }
     }
 }
+
+
 
 // Step 3: Configure the application
 $app = Application::configure(basePath: dirname(__DIR__))
