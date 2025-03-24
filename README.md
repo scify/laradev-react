@@ -19,7 +19,8 @@
   - [Code Scanning](#code-scanning)
   - [Git Hooks](#git-hooks)
 - [Available Scripts](#available-scripts)
-  - [Releasing a new version](#releasing-a-new-version)
+- [Available Scripts - DDEV](#available-scripts---ddev)
+- [Releasing a new version](#releasing-a-new-version)
 - [Security](#security)
 - [License](#license)
 - [Credits](#credits)
@@ -103,6 +104,12 @@ To run the tests, run the following command:
 ./vendor/bin/pest
 ```
 
+Or, under DDEV:
+
+```bash
+ddev test
+```
+
 To run the tests with coverage, run the following command:
 
 ```bash
@@ -140,11 +147,25 @@ composer install
 - `npm run lint` - Run ESLint
 - `npm run lint:fix` - Fix ESLint issues
 - `npm run types` - Check TypeScript types
-- `composer test` - Run PHP tests
 - `composer format` - Format PHP code
 - `composer analyse` - Run static analysis
 
-### Releasing a new version
+## Available Scripts - DDEV
+
+- `ddev artisan migrate` - Migrate the database
+- `ddev artisan db:seed` - Seed the database
+- `ddev artisan db:refresh` - Refresh the database
+- `ddev artisan db:reset` - Reset the database
+- `ddev artisan key:generate` - Generate the application key
+- `ddev artisan migrate:fresh` - Refresh the database and migrate
+- `ddev artisan migrate:fresh --seed` - Refresh the database and seed
+- `ddev artisan migrate:fresh --seed --seeder=DatabaseSeeder` - Refresh the database and seed with the DatabaseSeeder
+- `ddev pint` - Format PHP code
+- `ddev test` - Run tests
+- `ddev analyse` - Run static analysis
+- `ddev format` - Format all code
+
+## Releasing a new version
 
 After you have committed your changes, create a new git tag:
 
