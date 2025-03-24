@@ -66,6 +66,16 @@ To filter tests, use the `--filter` flag. For example:
 ./vendor/bin/pest --filter testName
 ```
 
+### Code Scanning
+
+This application uses [PHPStan](https://phpstan.org/) in order to perform code-scanning checks.
+
+In order to run the code-scanner, run the following command:
+
+```bash
+./vendor/bin/phpstan analyse
+```
+
 ### Releasing a new version
 
 After you have committed your changes, create a new git tag:

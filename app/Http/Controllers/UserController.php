@@ -8,6 +8,7 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use App\Services\User\UserService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Collection;
 use Inertia\Inertia;
 
 class UserController extends Controller {
@@ -112,9 +113,9 @@ class UserController extends Controller {
      * Get the roles for the form.
      * If user is not admin, filter available roles.
      *
-     * @return array<RolesEnum, string>
+     * @return Collection<int, array{name: string, label: string}>
      */
-    private function getRolesForForm(): array {
+    private function getRolesForForm(): Collection {
         $roles = collect(RolesEnum::cases());
 
         // If user is not admin, filter available roles
@@ -132,6 +133,6 @@ class UserController extends Controller {
                 'name' => $role->value,
                 'label' => 'roles.' . str_replace('-', '_', $role->value),
             ];
-        })->values()->all();
+        })->values();
     }
 }

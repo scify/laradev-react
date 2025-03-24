@@ -33,9 +33,10 @@ test('index shows users list to authorized users', function () {
     // Admin can view users
     $response = test()->actingAs($this->admin)->get(route('users.index'));
     $response->assertStatus(200)
-        ->assertInertia(fn ($page) => $page
-            ->component('users/index')
-            ->has('users')
+        ->assertInertia(
+            fn ($page) => $page
+                ->component('users/index')
+                ->has('users')
         );
 
     // User manager can view users
@@ -53,9 +54,10 @@ test('create shows form to authorized users', function () {
     // Admin can view create form
     $response = test()->actingAs($this->admin)->get(route('users.create'));
     $response->assertStatus(200)
-        ->assertInertia(fn ($page) => $page
-            ->component('users/create')
-            ->has('roles')
+        ->assertInertia(
+            fn ($page) => $page
+                ->component('users/create')
+                ->has('roles')
         );
 
     // User manager can view create form
