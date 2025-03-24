@@ -158,7 +158,7 @@ npm run dev
 
 ### 4.1 DDEV
 
-When using **DDEV**, you can view emails sent by the application using [Mailpit](). Read
+When using **DDEV**, you can view emails sent by the application using [Mailpit](https://github.com/axllent/mailpit). Read
 more [here](https://ddev.readthedocs.io/en/stable/users/usage/developer-tools/#email-capture-and-review-mailpit).
 
 ### 4.2 Native
