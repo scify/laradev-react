@@ -38,9 +38,11 @@
         @routes
         @viteReactRefresh
         @vite(['resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
+        <x-laravel-cookie-guard-scripts></x-laravel-cookie-guard-scripts>
         @inertiaHead
     </head>
     <body class="font-sans antialiased">
         @inertia
+        <x-laravel-cookie-guard></x-laravel-cookie-guard>
     </body>
 </html>
