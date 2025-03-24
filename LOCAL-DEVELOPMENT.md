@@ -29,7 +29,7 @@
 ## 1. Clone the Repository
 
 ```sh
-git clone https://github.com/your-org/laradev-react.git
+git clone https://github.com/scify/laradev-react.git
 cd laradev
 ```
 
@@ -53,12 +53,12 @@ cp .env.example .env
 If you are using **DDEV**, create a `.env.ddev` file with the following:
 
 ```ini
-APP_URL = "https://laradev.ddev.site:8443"
+APP_URL = "https://laradev-react.ddev.site:8443"
 DB_HOST = "db"
 DB_DATABASE = "db"
 DB_USERNAME = "db"
 DB_PASSWORD = "db"
-VITE_DEV_URL = "https://laradev.ddev.site"
+VITE_DEV_URL = "https://laradev-react.ddev.site"
 VITE_APP_PORT = "8443"
 VITE_DEV_PORT = "5179"
 ```
