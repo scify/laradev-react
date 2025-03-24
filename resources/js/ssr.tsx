@@ -25,7 +25,6 @@ createServer((page) =>
 					location: new URL(page.props.ziggy.location),
 				});
 			/* eslint-enable */
-
 			return <App {...props} />;
 		},
 	})
