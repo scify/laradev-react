@@ -104,6 +104,12 @@ ddev restart # If using DDEV
 
 ### 3.1 Using DDEV
 
+First generate an application key:
+
+```sh
+ddev artisan key:generate
+```
+
 To start the development environment using **DDEV**:
 
 ```sh
@@ -123,6 +129,12 @@ ddev npm run dev
 ```
 
 ### 3.2 Using Native
+
+First generate an application key:
+
+```sh
+php artisan key:generate
+```
 
 To switch back to using Native for local development:
 
