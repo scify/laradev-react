@@ -159,15 +159,6 @@ export default function Login({ status, canResetPassword, token, redirectTo }: L
 							<div className="grid gap-2">
 								<div className="flex items-center">
 									<Label htmlFor="password">{t('auth.login.password')}</Label>
-									{canResetPassword && (
-										<TextLink
-											href={route('password.request')}
-											className="ml-auto text-sm"
-											tabIndex={5}
-										>
-											{t('auth.login.forgot_password')}
-										</TextLink>
-									)}
 								</div>
 								<Input
 									id="password"
@@ -181,12 +172,15 @@ export default function Login({ status, canResetPassword, token, redirectTo }: L
 								/>
 								<InputError message={errors.password} />
 								<div className="mb-2 flex flex-col items-start justify-start gap-3">
-									<TextLink
-										href="https://www.anavathmisi.gr/"
-										className="text-sm"
-									>
-										{t('auth.login.forgot_password')}
-									</TextLink>
+									{canResetPassword && (
+										<TextLink
+											href={route('password.request')}
+											className="ml-0 text-sm"
+											tabIndex={5}
+										>
+											{t('auth.login.forgot_password')}
+										</TextLink>
+									)}
 								</div>
 							</div>
 
@@ -221,6 +215,12 @@ export default function Login({ status, canResetPassword, token, redirectTo }: L
 								{processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
 								{t('auth.login.button')}
 							</Button>
+						</div>
+						<div className="text-muted-foreground text-center text-sm">
+							Don't have an account?{' '}
+							<TextLink href={route('register')} tabIndex={5}>
+								Sign up
+							</TextLink>
 						</div>
 					</form>
 				</section>

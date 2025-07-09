@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
-use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class AuthenticatedSessionController extends Controller {
     /**
@@ -23,7 +22,7 @@ class AuthenticatedSessionController extends Controller {
         }
 
         return Inertia::render('auth/login', [
-            'canResetPassword' => false,
+            'canResetPassword' => true,
             'status' => $request->session()->get('status'),
         ]);
     }
@@ -34,11 +33,10 @@ class AuthenticatedSessionController extends Controller {
      *
      *
      * @param  LoginRequest  $request  The incoming login request containing credentials
-     * @return RedirectResponse|HttpResponse|InertiaResponse Returns either:
-     *                                                       - RedirectResponse to dashboard for regular users
-     *                                                       - Inertia render response to redirect to home route
+     * @return RedirectResponse Returns RedirectResponse to dashboard
+     *                          or an error response if authentication fails
      */
-    public function store(LoginRequest $request): RedirectResponse|HttpResponse|InertiaResponse {
+    public function store(LoginRequest $request): RedirectResponse {
         $request->authenticate();
         $request->session()->regenerate();
 
