@@ -1,0 +1,25 @@
+<?php
+
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserRestoreController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return redirect()->to(route('dashboard'))->withHeaders([
+        'Cache-Control' => 'no-cache, no-store, must-revalidate',
+        'Pragma' => 'no-cache',
+        'Expires' => '0',
+    ]);
+})->name('home');
+
+Route::middleware(['auth'])->group(function (): void {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::resource('users', UserController::class);
+
+    Route::put('/users/{user}/restore', UserRestoreController::class)->name('users.restore')->withTrashed();
+});
+
+require __DIR__ . '/settings.php';
+require __DIR__ . '/auth.php';
