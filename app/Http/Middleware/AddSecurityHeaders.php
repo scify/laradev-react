@@ -9,10 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 class AddSecurityHeaders {
     /**
      * Handle an incoming request by adding security headers.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handle(Request $request, Closure $next): Response {
         $response = $next($request);
@@ -72,7 +68,6 @@ class AddSecurityHeaders {
             // Ref: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/worker-src
             "worker-src 'self' blob:;"
         );
-
 
         /**
          * X-Content-Type-Options

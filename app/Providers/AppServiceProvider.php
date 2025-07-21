@@ -94,7 +94,7 @@ class AppServiceProvider extends ServiceProvider {
     protected function configureSecureUrls(): void {
         // Determine if HTTPS should be enforced
         $enforceHttps = $this->app->environment(['production', 'staging'])
-            && !$this->app->runningUnitTests();
+            && ! $this->app->runningUnitTests();
 
         // Force HTTPS for all generated URLs
         URL::forceHttps($enforceHttps);

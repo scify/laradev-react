@@ -3,7 +3,7 @@
 use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Support\Facades\Route;
 
-if (!function_exists('registerApiRoutes')) {
+if (! function_exists('registerApiRoutes')) {
     function registerApiRoutes() {
         Route::middleware(['auth:sanctum'])->group(function (): void {
             Route::get('/user/info', [UserController::class, 'userInfo']);

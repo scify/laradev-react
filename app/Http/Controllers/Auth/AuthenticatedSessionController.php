@@ -33,6 +33,7 @@ class AuthenticatedSessionController extends Controller {
      *
      *
      * @param  LoginRequest  $request  The incoming login request containing credentials
+     *
      * @return RedirectResponse Returns RedirectResponse to dashboard
      *                          or an error response if authentication fails
      */

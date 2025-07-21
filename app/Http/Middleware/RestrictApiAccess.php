@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Middleware to restrict API access based on allowed IP addresses.
  */
-
 class RestrictApiAccess {
     public function handle(Request $request, Closure $next): Response {
         $origin = $request->header('origin');
@@ -22,7 +21,7 @@ class RestrictApiAccess {
         $originAllowed = $origin && in_array($origin, $allowedOrigins);
         $refererAllowed = $referer && str_starts_with($referer, $appUrl);
 
-        if (!($originAllowed || $refererAllowed)) {
+        if (! ($originAllowed || $refererAllowed)) {
             Log::warning('Blocked API access', [
                 'origin' => $origin,
                 'referer' => $referer,

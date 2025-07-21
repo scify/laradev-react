@@ -80,7 +80,7 @@ class UserService {
         $user = auth()->user();
 
         // If user is not admin, further filter available roles
-        if (!$user->hasRole(RolesEnum::ADMINISTRATOR->value)) {
+        if (! $user->hasRole(RolesEnum::ADMINISTRATOR->value)) {
             $roles = $roles->filter(
                 fn (RolesEnum $role) => in_array($role->value, [
                     RolesEnum::USER_MANAGER->value,

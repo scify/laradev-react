@@ -32,8 +32,6 @@ if (getenv('APP_ENV') !== 'testing') {
     }
 }
 
-
-
 // Step 3: Configure the application
 $app = Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
