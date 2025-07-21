@@ -4,9 +4,13 @@ namespace App\Services\Dashboard;
 
 use App\Enums\RolesEnum;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 class DashboardService {
+    /**
+     * @return array<string, mixed>
+     */
     public function getStats(): array {
         return [
             'users' => [
@@ -35,6 +39,9 @@ class DashboardService {
         return User::onlyTrashed()->count();
     }
 
+    /**
+     * @return array<string, int>
+     */
     private function getUsersByRole(): array {
         return collect(RolesEnum::cases())->mapWithKeys(function (RolesEnum $role) {
             return [
@@ -47,6 +54,9 @@ class DashboardService {
         return User::where('created_at', '>=', now()->subDays($days))->count();
     }
 
+    /**
+     * @return Collection<int, array{id: int, name: string, email: string, created_at: Carbon, role: string|null}>
+     */
     private function getRecentUsersList(): Collection {
         return User::with('roles')
             ->orderBy('created_at', 'desc')

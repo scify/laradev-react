@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -9,16 +10,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property-read int $id
  * @property-read string $name
  * @property-read string $email
- * @property-read \Illuminate\Database\Eloquent\Collection $roles
  * @property-read string|null $role
- * @property-read \Carbon\Carbon|null $created_at
- * @property-read \Carbon\Carbon|null $updated_at
+ * @property-read Carbon|null $created_at
+ * @property-read Carbon|null $updated_at
  */
 class UserResource extends JsonResource {
     /**
-     * Transform the resource into an array.
-     *
-     * @param  Request  $request
      * @return array<string, mixed>
      */
     public function toArray(Request $request): array {

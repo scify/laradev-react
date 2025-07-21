@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider {
+    /**
+     * @var array<class-string, class-string>
+     */
     protected array $policies = [
         User::class => UserPolicy::class,
     ];
@@ -98,7 +101,8 @@ class AppServiceProvider extends ServiceProvider {
 
         // Ensure proper server variable is set
         if ($enforceHttps) {
-            $this->app['request']->server->set('HTTPS', 'on');
+            $request = app('request');
+            $request->server->set('HTTPS', 'on');
         }
 
         /**

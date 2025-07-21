@@ -12,6 +12,8 @@
 		"format:php": "vendor/bin/pint",
 		"lint": "eslint 'resources/**/*.{js,jsx,ts,tsx}'",
 		"lint:fix": "eslint 'resources/**/*.{js,jsx,ts,tsx}' --fix",
+		"lint:styles": "stylelint './resources/**/*.css' './resources/**/*.scss'",
+		"lint:styles:fix": "stylelint './resources/**/*.css' './resources/**/*.scss' --fix",
 		"types": "tsc --noEmit",
 		"test": "jest",
 		"test:watch": "jest --watch",
@@ -46,7 +48,10 @@
 		"typescript": "^5.8.3",
 		"typescript-eslint": "^8.36.0",
 		"vite": "^7.0",
-		"vite-plugin-manifest-sri": "^0.2.0"
+		"vite-plugin-manifest-sri": "^0.2.0",
+		"stylelint": "^16.21",
+		"stylelint-config-standard-scss": "^15.0",
+		"stylelint-prettier": "^5.0"
 	},
 	"dependencies": {
 		"@fontsource-utils/scss": "^0.2.1",

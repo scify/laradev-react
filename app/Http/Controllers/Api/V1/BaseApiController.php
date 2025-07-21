@@ -11,11 +11,14 @@ class BaseApiController extends Controller {
         JsonResource::withoutWrapping();
     }
 
-    protected function success($data = [], $status = 200): JsonResponse {
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    protected function success(array $data = [], int $status = 200): JsonResponse {
         return response()->json($data, $status);
     }
 
-    protected function error($message, $status = 400): JsonResponse {
+    protected function error(string $message, int $status = 400): JsonResponse {
         return response()->json([
             'error' => $message,
         ], $status);

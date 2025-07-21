@@ -7,6 +7,9 @@ use App\Models\User;
 use Illuminate\Support\Collection;
 
 class UserService {
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function create(array $data): User {
         $role = $data['role'] ?? RolesEnum::REGISTERED_USER->value;
         unset($data['role']);
@@ -17,6 +20,9 @@ class UserService {
         return $user;
     }
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function update(User $user, array $data): User {
         $role = $data['role'] ?? $user->roles->first()?->name;
         unset($data['role']);
@@ -27,7 +33,7 @@ class UserService {
         return $user;
     }
 
-    public function delete(User $user): bool {
+    public function delete(User $user): ?bool {
         return $user->delete();
     }
 
@@ -43,6 +49,8 @@ class UserService {
 
     /**
      * Get users based on filters
+     *
+     * @return Collection<int, User>
      */
     public function getUsers(
         ?string $search = null,
@@ -63,12 +71,16 @@ class UserService {
      * Get the roles for the form.
      *
      * @return Collection<int, array{name: string, label: string}>
+     *
+     * @phpstan-return Collection<int, array{name: string, label: string}>
      */
     public function getRolesForForm(): Collection {
         $roles = collect(RolesEnum::cases());
+        /** @var User $user */
+        $user = auth()->user();
 
         // If user is not admin, further filter available roles
-        if (!auth()->user()->hasRole(RolesEnum::ADMINISTRATOR->value)) {
+        if (!$user->hasRole(RolesEnum::ADMINISTRATOR->value)) {
             $roles = $roles->filter(
                 fn (RolesEnum $role) => in_array($role->value, [
                     RolesEnum::USER_MANAGER->value,

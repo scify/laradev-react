@@ -7,8 +7,10 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use App\Services\User\UserService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class UserController extends Controller {
     use AuthorizesRequests;
@@ -20,7 +22,7 @@ class UserController extends Controller {
     /**
      * Display a listing of users.
      */
-    public function index(Request $request) {
+    public function index(Request $request): Response {
         $this->authorize('viewAny', User::class);
 
         $search = $request->query('search');
@@ -40,7 +42,7 @@ class UserController extends Controller {
     /**
      * Show the form for creating a new user.
      */
-    public function create() {
+    public function create(): Response {
         $this->authorize('create', User::class);
 
         return Inertia::render('users/create', [
@@ -51,7 +53,7 @@ class UserController extends Controller {
     /**
      * Store a newly created user.
      */
-    public function store(UserStoreRequest $request) {
+    public function store(UserStoreRequest $request): RedirectResponse {
         $this->authorize('create', User::class);
 
         $this->userService->create($request->validated());
@@ -64,7 +66,7 @@ class UserController extends Controller {
     /**
      * Display the specified user.
      */
-    public function show(User $user) {
+    public function show(User $user): Response {
         $this->authorize('view', $user);
 
         return Inertia::render('users/show', [
@@ -75,7 +77,7 @@ class UserController extends Controller {
     /**
      * Show the form for editing the specified user.
      */
-    public function edit(User $user) {
+    public function edit(User $user): Response {
         $this->authorize('update', $user);
 
         return Inertia::render('users/edit', [
@@ -87,7 +89,7 @@ class UserController extends Controller {
     /**
      * Update the specified user.
      */
-    public function update(UserUpdateRequest $request, User $user) {
+    public function update(UserUpdateRequest $request, User $user): RedirectResponse {
         $this->authorize('update', $user);
 
         $this->userService->update($user, $request->validated());
@@ -100,7 +102,7 @@ class UserController extends Controller {
     /**
      * Remove the specified user.
      */
-    public function destroy(User $user) {
+    public function destroy(User $user): RedirectResponse {
         $this->authorize('delete', $user);
 
         $this->userService->delete($user);

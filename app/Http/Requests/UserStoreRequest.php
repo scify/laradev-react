@@ -11,6 +11,9 @@ class UserStoreRequest extends FormRequest {
         return Gate::allows('create', User::class);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function rules(): array {
         return [
             'name' => ['required', 'string', 'max:255'],
@@ -20,6 +23,9 @@ class UserStoreRequest extends FormRequest {
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function attributes(): array {
         return [
             'name' => __('users.labels.name'),

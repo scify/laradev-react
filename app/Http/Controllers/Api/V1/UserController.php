@@ -3,15 +3,19 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Enums\RolesEnum;
+use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 
 class UserController extends BaseApiController {
     /**
      * Get user information and permissions.
      *
-     * @return JsonResponse
+     *
+     * @throws AuthorizationException
      */
     public function userInfo(): JsonResponse {
+        /** @var User $user */
         $user = auth()->user();
 
         $permissions = [];
