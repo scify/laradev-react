@@ -33,3 +33,6 @@ coverage/
 
 # ziggy generated files
 /resources/js/ziggy.js
+
+# Gitleaks binary (should be installed locally)
+gitleaks
