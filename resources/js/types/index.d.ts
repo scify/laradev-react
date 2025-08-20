@@ -1,5 +1,6 @@
 import { LucideIcon } from 'lucide-react';
 import type { Config } from 'ziggy-js';
+import { MouseEventHandler } from 'react';
 
 type PermissionAction = 'view' | 'create' | 'update' | 'delete';
 type PermissionResource = 'users' /* | 'posts' | 'comments' etc */;
@@ -38,6 +39,7 @@ export interface NavItem {
     isActive?: boolean;
     children?: NavItem[];
     defaultOpen?: boolean;
+    onClick?: MouseEventHandler;
 }
 
 export interface SharedData {

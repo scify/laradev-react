@@ -11,7 +11,7 @@ import { type NavItem as NavItemType } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useState, useEffect, MouseEventHandler } from 'react';
+import { useState, useEffect } from 'react';
 
 interface NavMainProps {
 	items: NavItemType[];
@@ -114,7 +114,7 @@ export function NavMain({ items }: NavMainProps) {
 												onClick={() => handleChildClick(index)}
 											>
 												<Link
-													href={child.href!}
+													href={child.href}
 													className={cn(
 														'mb-1 flex items-center rounded-md px-3 py-1',
 														isRouteActive(child.href)
@@ -139,10 +139,10 @@ export function NavMain({ items }: NavMainProps) {
 						<SidebarMenuButton
 							size="lg"
 							asChild
-							onClick={item.onClick as MouseEventHandler | undefined}
+							onClick={item.onClick ? item.onClick : undefined}
 						>
 							<Link
-								href={item.href!}
+								href={item.href}
 								className={cn(
 									'flex items-center rounded-md px-2 py-1',
 									isRouteActive(item.href)
