@@ -3252,16 +3252,16 @@
         },
         {
             "name": "phpoption/phpoption",
-            "version": "1.9.3",
+            "version": "1.9.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/php-option.git",
-                "reference": "e3fac8b24f56113f7cb96af14958c0dd16330f54"
+                "reference": "638a154f8d4ee6a5cfa96d6a34dfbe0cffa9566d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/e3fac8b24f56113f7cb96af14958c0dd16330f54",
-                "reference": "e3fac8b24f56113f7cb96af14958c0dd16330f54",
+                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/638a154f8d4ee6a5cfa96d6a34dfbe0cffa9566d",
+                "reference": "638a154f8d4ee6a5cfa96d6a34dfbe0cffa9566d",
                 "shasum": ""
             },
             "require": {
@@ -3269,7 +3269,7 @@
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
-                "phpunit/phpunit": "^8.5.39 || ^9.6.20 || ^10.5.28"
+                "phpunit/phpunit": "^8.5.44 || ^9.6.25 || ^10.5.53 || ^11.5.34"
             },
             "type": "library",
             "extra": {
@@ -3311,7 +3311,7 @@
             ],
             "support": {
                 "issues": "https://github.com/schmittjoh/php-option/issues",
-                "source": "https://github.com/schmittjoh/php-option/tree/1.9.3"
+                "source": "https://github.com/schmittjoh/php-option/tree/1.9.4"
             },
             "funding": [
                 {
@@ -3323,7 +3323,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-20T21:41:07+00:00"
+            "time": "2025-08-21T11:53:16+00:00"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -4125,16 +4125,16 @@
         },
         {
             "name": "scify/laravel-cookie-guard",
-            "version": "v4.1.6",
+            "version": "v4.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scify/laravel-cookie-guard.git",
-                "reference": "090e8bd10f71d96e6bd77cfbc07f9d30aefeb394"
+                "reference": "811e2be6b56118a0809168d4ea2681bbadc6605c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/scify/laravel-cookie-guard/zipball/090e8bd10f71d96e6bd77cfbc07f9d30aefeb394",
-                "reference": "090e8bd10f71d96e6bd77cfbc07f9d30aefeb394",
+                "url": "https://api.github.com/repos/scify/laravel-cookie-guard/zipball/811e2be6b56118a0809168d4ea2681bbadc6605c",
+                "reference": "811e2be6b56118a0809168d4ea2681bbadc6605c",
                 "shasum": ""
             },
             "require": {
@@ -4194,22 +4194,22 @@
             ],
             "support": {
                 "issues": "https://github.com/scify/laravel-cookie-guard/issues",
-                "source": "https://github.com/scify/laravel-cookie-guard/tree/v4.1.6"
+                "source": "https://github.com/scify/laravel-cookie-guard/tree/v4.1.7"
             },
-            "time": "2025-07-07T12:24:42+00:00"
+            "time": "2025-08-21T07:07:12+00:00"
         },
         {
             "name": "sentry/sentry",
-            "version": "4.14.2",
+            "version": "4.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-php.git",
-                "reference": "bfeec74303d60d3f8bc33701ab3e86f8a8729f17"
+                "reference": "b2d84de69f3eda8ca22b0b00e9f923be3b837355"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/bfeec74303d60d3f8bc33701ab3e86f8a8729f17",
-                "reference": "bfeec74303d60d3f8bc33701ab3e86f8a8729f17",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/b2d84de69f3eda8ca22b0b00e9f923be3b837355",
+                "reference": "b2d84de69f3eda8ca22b0b00e9f923be3b837355",
                 "shasum": ""
             },
             "require": {
@@ -4273,7 +4273,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-php/issues",
-                "source": "https://github.com/getsentry/sentry-php/tree/4.14.2"
+                "source": "https://github.com/getsentry/sentry-php/tree/4.15.0"
             },
             "funding": [
                 {
@@ -4285,7 +4285,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2025-07-21T08:28:29+00:00"
+            "time": "2025-08-20T14:26:37+00:00"
         },
         {
             "name": "sentry/sentry-laravel",
@@ -8459,20 +8459,20 @@
         },
         {
             "name": "pestphp/pest",
-            "version": "v3.8.3",
+            "version": "v3.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pestphp/pest.git",
-                "reference": "165c879fe6e66926235d562123db206861aa6cc1"
+                "reference": "72cf695554420e21858cda831d5db193db102574"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pestphp/pest/zipball/165c879fe6e66926235d562123db206861aa6cc1",
-                "reference": "165c879fe6e66926235d562123db206861aa6cc1",
+                "url": "https://api.github.com/repos/pestphp/pest/zipball/72cf695554420e21858cda831d5db193db102574",
+                "reference": "72cf695554420e21858cda831d5db193db102574",
                 "shasum": ""
             },
             "require": {
-                "brianium/paratest": "^7.8.3",
+                "brianium/paratest": "^7.8.4",
                 "nunomaduro/collision": "^8.8.2",
                 "nunomaduro/termwind": "^2.3.1",
                 "pestphp/pest-plugin": "^3.0.0",
@@ -8555,7 +8555,7 @@
             ],
             "support": {
                 "issues": "https://github.com/pestphp/pest/issues",
-                "source": "https://github.com/pestphp/pest/tree/v3.8.3"
+                "source": "https://github.com/pestphp/pest/tree/v3.8.4"
             },
             "funding": [
                 {
@@ -8567,7 +8567,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-19T10:11:21+00:00"
+            "time": "2025-08-20T19:12:42+00:00"
         },
         {
             "name": "pestphp/pest-plugin",
