@@ -84,8 +84,7 @@
 		],
 		"format": [
 			"npm run format",
-			"vendor/bin/pint --parallel",
-			"vendor/bin/rector"
+			"vendor/bin/pint --parallel"
 		]
 	},
 	"extra": {
