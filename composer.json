@@ -75,6 +75,8 @@
 		"post-install-cmd": [
 			"bash tools/git-hooks/install.sh"
 		],
+		"test": "vendor/bin/pest",
+		"test:coverage": "vendor/bin/pest --coverage",
 		"lint": [
 			"npm run lint",
 			"npm run lint:styles",
@@ -84,7 +86,8 @@
 		],
 		"format": [
 			"npm run format",
-			"vendor/bin/pint --parallel"
+			"vendor/bin/pint --parallel",
+			"vendor/bin/rector"
 		]
 	},
 	"extra": {
