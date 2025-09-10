@@ -203,7 +203,7 @@ jobs:
         name: Dependency Review
         runs-on: ubuntu-latest
         needs: [check-advanced-security, essential-security]
-        if: && needs.essential-security.outputs.secrets-clean == 'true' && github.event_name == 'pull_request'
+        if: needs.essential-security.outputs.secrets-clean == 'true' && github.event_name == 'pull_request'
 
         permissions:
             contents: read
