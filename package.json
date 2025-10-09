@@ -39,7 +39,7 @@
 		"eslint": "^9.37.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-react": "^7.37.5",
-		"eslint-plugin-react-hooks": "^6.1.1",
+		"eslint-plugin-react-hooks": "^7.0.0",
 		"jest": "^30.2.0",
 		"jest-environment-jsdom": "^30.2.0",
 		"prettier": "^3.6.2",
@@ -63,7 +63,7 @@
 		"@fontsource-variable/quicksand": "^5.2.10",
 		"@fontsource-variable/source-sans-3": "^5.2.9",
 		"@headlessui/react": "^2.2.9",
-		"@inertiajs/react": "^2.2.6",
+		"@inertiajs/react": "^2.2.7",
 		"@radix-ui/react-avatar": "^1.1.10",
 		"@radix-ui/react-checkbox": "^1.3.3",
 		"@radix-ui/react-collapsible": "^1.1.12",
@@ -100,5 +100,5 @@
 		"@tailwindcss/oxide-linux-x64-gnu": "^4.1.14",
 		"lightningcss-linux-x64-gnu": "^1.30.2"
 	},
-	"packageManager": "npm@11.6.1"
+	"packageManager": "npm@11.6.2"
 }
