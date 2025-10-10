@@ -6,17 +6,18 @@ use App\Enums\RolesEnum;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-$LOGIN_ROUTE = '/login';
-
 uses(RefreshDatabase::class);
 
 beforeEach(function (): void {
     // Run the role seeder first
     $this->seed(\Database\Seeders\RolesAndPermissionsSeeder::class);
+
+    // Define login route for all tests
+    $this->loginRoute = '/login';
 });
 
 test('login screen can be rendered', function (): void {
-    $response = $this->get($LOGIN_ROUTE);
+    $response = $this->get($this->loginRoute);
 
     $response->assertStatus(200);
 });
@@ -25,11 +26,11 @@ test('users can authenticate using the login screen', function (): void {
     $user = User::factory()->create()->assignRole(RolesEnum::REGISTERED_USER->value);
 
     // First get the login page to obtain CSRF token
-    $this->get($LOGIN_ROUTE);
+    $this->get($this->loginRoute);
 
     // Then attempt login with the token
     $response = $this->withSession(['_token' => csrf_token()])
-        ->post($LOGIN_ROUTE, [
+        ->post($this->loginRoute, [
             'email' => $user->email,
             'password' => 'password',
             '_token' => csrf_token(),
@@ -46,7 +47,7 @@ test('users can authenticate using the login screen', function (): void {
 test('users can not authenticate with invalid password', function (): void {
     $user = User::factory()->create();
 
-    $response = $this->post($LOGIN_ROUTE, [
+    $response = $this->post($this->loginRoute, [
         'email' => $user->email,
         'password' => 'wrong-password',
         '_token' => csrf_token(),
