@@ -17,16 +17,18 @@ interface NavMainProps {
 	items: NavItemType[];
 }
 
-export function NavMain({ items }: NavMainProps) {
+export function NavMain({ items }: Readonly<NavMainProps>) {
 	const { url } = usePage();
 	const { state } = useSidebar();
-	const [openGroups, setOpenGroups] = useState<number[]>(() => {
+	const [openGroups, setOpenGroups] = useState<string[]>(() => {
 		// Initialize with groups that have defaultOpen set to true
 		// or if they contain the active route
 		return items
-			.map((item, index) => {
+			.map((item) => {
+				const itemKey = item.href || item.title;
+
 				// Check if item is set to defaultOpen
-				if (item.defaultOpen) return index;
+				if (item.defaultOpen) return itemKey;
 
 				// Check if any child route is active
 				if (
@@ -40,12 +42,12 @@ export function NavMain({ items }: NavMainProps) {
 						return false;
 					})
 				) {
-					return index;
+					return itemKey;
 				}
 
-				return -1;
+				return null;
 			})
-			.filter((index) => index !== -1);
+			.filter((key): key is string => key !== null);
 	});
 
 	// Helper function to check if a route is active
@@ -70,25 +72,27 @@ export function NavMain({ items }: NavMainProps) {
 	}, [openGroups]);
 
 	// Only handle child clicks for highlighting
-	const handleChildClick = (parentIndex: number) => {
-		if (!openGroups.includes(parentIndex)) {
-			setOpenGroups([...openGroups, parentIndex]);
+	const handleChildClick = (itemKey: string) => {
+		if (!openGroups.includes(itemKey)) {
+			setOpenGroups([...openGroups, itemKey]);
 		}
 	};
 
 	return (
 		<SidebarMenu>
-			{items.map((item, index) =>
-				item.children ? (
+			{items.map((item) => {
+				const itemKey = item.href || item.title;
+
+				return item.children ? (
 					<Collapsible
-						key={index}
+						key={itemKey}
 						className="group/collapsible"
-						open={openGroups.includes(index)}
+						open={openGroups.includes(itemKey)}
 						onOpenChange={(open) => {
 							setOpenGroups(
 								open
-									? [...openGroups, index]
-									: openGroups.filter((i) => i !== index)
+									? [...openGroups, itemKey]
+									: openGroups.filter((key) => key !== itemKey)
 							);
 						}}
 					>
@@ -106,36 +110,39 @@ export function NavMain({ items }: NavMainProps) {
 							</SidebarGroupLabel>
 							{state !== 'collapsed' && (
 								<CollapsibleContent className="px-2">
-									{item.children.map((child, childIndex) => (
-										<SidebarMenuItem key={childIndex}>
-											<SidebarMenuButton
-												size="lg"
-												asChild
-												onClick={() => handleChildClick(index)}
-											>
-												<Link
-													href={child.href}
-													className={cn(
-														'mb-1 flex items-center rounded-md px-3 py-1',
-														isRouteActive(child.href)
-															? 'bg-sidebar-foreground/20 text-sidebar-background'
-															: 'hover:bg-sidebar-foreground/10'
-													)}
+									{item.children.map((child) => {
+										const childKey = child.href || child.title;
+										return (
+											<SidebarMenuItem key={childKey}>
+												<SidebarMenuButton
+													size="lg"
+													asChild
+													onClick={() => handleChildClick(itemKey)}
 												>
-													{child.icon && (
-														<child.icon className="mr-2 h-4 w-4" />
-													)}
-													{child.title}
-												</Link>
-											</SidebarMenuButton>
-										</SidebarMenuItem>
-									))}
+													<Link
+														href={child.href}
+														className={cn(
+															'mb-1 flex items-center rounded-md px-3 py-1',
+															isRouteActive(child.href)
+																? 'bg-sidebar-foreground/20 text-sidebar-background'
+																: 'hover:bg-sidebar-foreground/10'
+														)}
+													>
+														{child.icon && (
+															<child.icon className="mr-2 h-4 w-4" />
+														)}
+														{child.title}
+													</Link>
+												</SidebarMenuButton>
+											</SidebarMenuItem>
+										);
+									})}
 								</CollapsibleContent>
 							)}
 						</SidebarGroup>
 					</Collapsible>
 				) : (
-					<SidebarMenuItem key={index} className="px-2">
+					<SidebarMenuItem key={itemKey} className="px-2">
 						<SidebarMenuButton
 							size="lg"
 							asChild
@@ -155,8 +162,8 @@ export function NavMain({ items }: NavMainProps) {
 							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
-				)
-			)}
+				);
+			})}
 		</SidebarMenu>
 	);
 }

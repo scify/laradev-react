@@ -64,7 +64,7 @@ export function useAppearance() {
 
 	useEffect(() => {
 		const savedAppearance = localStorage.getItem('appearance') as Appearance | null;
-		updateAppearance(savedAppearance || 'light');
+		updateAppearance(savedAppearance ?? 'light');
 
 		return () => mediaQuery()?.removeEventListener('change', handleSystemThemeChange);
 	}, [updateAppearance]);

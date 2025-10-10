@@ -26,7 +26,7 @@ interface UserFormProps {
 	}[];
 }
 
-export function UserForm({ user, action, roles }: UserFormProps) {
+export function UserForm({ user, action, roles }: Readonly<UserFormProps>) {
 	const { t } = useTranslations();
 	const { data, setData, post, put, processing, errors } = useForm({
 		name: user?.name ?? '',

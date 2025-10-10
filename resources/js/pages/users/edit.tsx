@@ -12,7 +12,7 @@ interface EditUserProps {
 	}[];
 }
 
-export default function Edit({ user, roles }: EditUserProps) {
+export default function Edit({ user, roles }: Readonly<EditUserProps>) {
 	const { t } = useTranslations();
 
 	return (

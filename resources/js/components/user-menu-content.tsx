@@ -15,7 +15,7 @@ interface UserMenuContentProps {
 	user: User;
 }
 
-export function UserMenuContent({ user }: UserMenuContentProps) {
+export function UserMenuContent({ user }: Readonly<UserMenuContentProps>) {
 	const cleanup = useMobileNavigation();
 	const { t } = useTranslations();
 

@@ -13,7 +13,7 @@ class UserPolicy {
         return $user->can(PermissionsEnum::VIEW_USERS->value);
     }
 
-    public function view(User $user, User $model): bool {
+    public function view(User $user): bool {
         return $user->can(PermissionsEnum::VIEW_USERS->value);
     }
 
@@ -49,7 +49,7 @@ class UserPolicy {
         return $user->can(PermissionsEnum::DELETE_USERS->value);
     }
 
-    public function restore(User $user, User $model): bool {
+    public function restore(User $user): bool {
         return $user->can(PermissionsEnum::RESTORE_USERS->value);
     }
 }

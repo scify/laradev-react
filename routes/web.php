@@ -21,5 +21,7 @@ Route::middleware(['auth'])->group(function (): void {
     Route::put('/users/{user}/restore', UserRestoreController::class)->name('users.restore')->withTrashed();
 });
 
+// NOSONAR - this comes from Laravel
 require __DIR__ . '/settings.php';
+// NOSONAR - this comes from Laravel
 require __DIR__ . '/auth.php';

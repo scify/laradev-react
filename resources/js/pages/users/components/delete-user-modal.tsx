@@ -18,7 +18,7 @@ interface DeleteUserModalProps {
 	onClose: () => void;
 }
 
-export function DeleteUserModal({ user, open, onClose }: DeleteUserModalProps) {
+export function DeleteUserModal({ user, open, onClose }: Readonly<DeleteUserModalProps>) {
 	const [isDeleting, setIsDeleting] = useState(false);
 	const { t } = useTranslations();
 

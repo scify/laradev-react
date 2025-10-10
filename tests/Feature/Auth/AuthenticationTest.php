@@ -6,6 +6,8 @@ use App\Enums\RolesEnum;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
+$LOGIN_ROUTE = '/login';
+
 uses(RefreshDatabase::class);
 
 beforeEach(function (): void {
@@ -14,7 +16,7 @@ beforeEach(function (): void {
 });
 
 test('login screen can be rendered', function (): void {
-    $response = $this->get('/login');
+    $response = $this->get($LOGIN_ROUTE);
 
     $response->assertStatus(200);
 });
@@ -23,11 +25,11 @@ test('users can authenticate using the login screen', function (): void {
     $user = User::factory()->create()->assignRole(RolesEnum::REGISTERED_USER->value);
 
     // First get the login page to obtain CSRF token
-    $response = $this->get('/login');
+    $this->get($LOGIN_ROUTE);
 
     // Then attempt login with the token
     $response = $this->withSession(['_token' => csrf_token()])
-        ->post('/login', [
+        ->post($LOGIN_ROUTE, [
             'email' => $user->email,
             'password' => 'password',
             '_token' => csrf_token(),
@@ -44,7 +46,7 @@ test('users can authenticate using the login screen', function (): void {
 test('users can not authenticate with invalid password', function (): void {
     $user = User::factory()->create();
 
-    $response = $this->post('/login', [
+    $response = $this->post($LOGIN_ROUTE, [
         'email' => $user->email,
         'password' => 'wrong-password',
         '_token' => csrf_token(),

@@ -52,7 +52,7 @@ interface AppHeaderProps {
 	breadcrumbs?: BreadcrumbItem[];
 }
 
-export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
+export function AppHeader({ breadcrumbs = [] }: Readonly<AppHeaderProps>) {
 	const page = usePage<SharedData>();
 	const { auth } = page.props;
 	const getInitials = useInitials();
@@ -136,9 +136,9 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
 					<div className="ml-6 hidden h-full items-center space-x-6 lg:flex">
 						<NavigationMenu className="flex h-full items-stretch">
 							<NavigationMenuList className="flex h-full items-stretch space-x-2">
-								{mainNavItems.map((item, index) => (
+								{mainNavItems.map((item) => (
 									<NavigationMenuItem
-										key={index}
+										key={item.href || item.title}
 										className="relative flex h-full items-center"
 									>
 										<Link
