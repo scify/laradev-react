@@ -6,7 +6,7 @@ export default function AppLogoIcon(props: ImgHTMLAttributes<HTMLImageElement>) 
 			{...props}
 			src="/images/logo.png"
 			alt="App Logo"
-			className={`w-auto ${props.className || ''}`}
+			className={`w-auto ${props.className ?? ''}`}
 		/>
 	);
 }

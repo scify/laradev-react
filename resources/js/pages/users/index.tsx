@@ -1,6 +1,6 @@
 import AppLayout from '@/layouts/app-layout';
 import { PageProps, User, Auth } from '@/types/index.d';
-import { Link } from '@inertiajs/react';
+import { Link, Head, usePage, useForm } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import {
 	Table,
@@ -12,8 +12,6 @@ import {
 } from '@/components/ui/table';
 import { Plus, Pencil, Trash, MoreHorizontal, Eye, ArrowUpCircle } from 'lucide-react';
 import { useTranslations } from '@/hooks/use-translations';
-import { usePage } from '@inertiajs/react';
-import { Head } from '@inertiajs/react';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -25,7 +23,6 @@ import { DeleteUserModal } from './components/delete-user-modal';
 import { RestoreUserModal } from './components/restore-user-modal';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
-import { useForm } from '@inertiajs/react';
 import { useDebouncedCallback } from 'use-debounce';
 import { formatDate } from '@/utils/format';
 interface UsersIndexProps extends PageProps {

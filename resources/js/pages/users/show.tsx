@@ -7,7 +7,7 @@ interface ShowUserProps extends PageProps {
 	user: User;
 }
 
-export default function Show({ user }: ShowUserProps) {
+export default function Show({ user }: Readonly<ShowUserProps>) {
 	const { t } = useTranslations();
 
 	return (

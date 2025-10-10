@@ -10,7 +10,7 @@ interface CreateUserProps {
 	}[];
 }
 
-export default function Create({ roles }: CreateUserProps) {
+export default function Create({ roles }: Readonly<CreateUserProps>) {
 	const { t } = useTranslations();
 
 	return (

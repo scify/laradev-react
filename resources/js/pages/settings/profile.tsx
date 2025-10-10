@@ -21,10 +21,10 @@ interface ProfileForm {
 export default function Profile({
 	mustVerifyEmail,
 	status,
-}: {
+}: Readonly<{
 	mustVerifyEmail: boolean;
 	status?: string;
-}) {
+}>) {
 	const { t } = useTranslations();
 	const { auth } = usePage<SharedData>().props;
 

@@ -18,7 +18,7 @@ interface RestoreUserModalProps {
 	onClose: () => void;
 }
 
-export function RestoreUserModal({ user, open, onClose }: RestoreUserModalProps) {
+export function RestoreUserModal({ user, open, onClose }: Readonly<RestoreUserModalProps>) {
 	const { t } = useTranslations();
 	const form = useForm({});
 

@@ -34,7 +34,7 @@ class RolesAndPermissionsSeeder extends Seeder {
         // create roles using RolesEnum
         $admin_role = Role::firstOrCreate(['name' => RolesEnum::ADMINISTRATOR->value, 'guard_name' => 'web']);
         $user_manager_role = Role::firstOrCreate(['name' => RolesEnum::USER_MANAGER->value, 'guard_name' => 'web']);
-        $registered_user_role = Role::firstOrCreate(['name' => RolesEnum::REGISTERED_USER->value, 'guard_name' => 'web']);
+        Role::firstOrCreate(['name' => RolesEnum::REGISTERED_USER->value, 'guard_name' => 'web']);
         // flush cache after creating roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 

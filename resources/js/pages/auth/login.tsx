@@ -27,7 +27,12 @@ interface LoginProps {
 	redirectTo?: string;
 }
 
-export default function Login({ status, canResetPassword, token, redirectTo }: LoginProps) {
+export default function Login({
+	status,
+	canResetPassword,
+	token,
+	redirectTo,
+}: Readonly<LoginProps>) {
 	const form = useForm<Required<LoginForm>>({
 		email: '',
 		password: '',
@@ -150,7 +155,6 @@ export default function Login({ status, canResetPassword, token, redirectTo }: L
 									type="email"
 									required
 									autoFocus
-									tabIndex={1}
 									autoComplete="email"
 									value={data.email}
 									onChange={(e) => setData('email', e.target.value)}
@@ -167,7 +171,6 @@ export default function Login({ status, canResetPassword, token, redirectTo }: L
 									id="password"
 									type="password"
 									required
-									tabIndex={2}
 									autoComplete="current-password"
 									value={data.password}
 									onChange={(e) => setData('password', e.target.value)}
@@ -179,7 +182,6 @@ export default function Login({ status, canResetPassword, token, redirectTo }: L
 										<TextLink
 											href={route('password.request')}
 											className="ml-0 text-sm"
-											tabIndex={5}
 										>
 											{t('auth.login.forgot_password')}
 										</TextLink>
@@ -193,7 +195,6 @@ export default function Login({ status, canResetPassword, token, redirectTo }: L
 									name="remember"
 									checked={data.remember}
 									onClick={() => setData('remember', !data.remember)}
-									tabIndex={3}
 								/>
 								<Label htmlFor="remember">{t('auth.login.remember')}</Label>
 							</div>
@@ -214,7 +215,6 @@ export default function Login({ status, canResetPassword, token, redirectTo }: L
 							<Button
 								type="submit"
 								className="mt-4 w-full py-4"
-								tabIndex={4}
 								disabled={processing}
 							>
 								{processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
@@ -223,9 +223,7 @@ export default function Login({ status, canResetPassword, token, redirectTo }: L
 						</div>
 						<div className="text-muted-foreground text-center text-sm">
 							Don't have an account?{' '}
-							<TextLink href={route('register')} tabIndex={5}>
-								Sign up
-							</TextLink>
+							<TextLink href={route('register')}>Sign up</TextLink>
 						</div>
 					</form>
 				</section>

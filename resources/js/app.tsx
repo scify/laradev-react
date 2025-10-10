@@ -5,7 +5,7 @@ import { createRoot } from 'react-dom/client';
 import { initializeTheme } from './hooks/use-appearance';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME ?? 'Laravel';
 
 createInertiaApp({
 	title: (title) => `${title} - ${appName}`,

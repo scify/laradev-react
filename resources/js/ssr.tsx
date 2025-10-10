@@ -5,7 +5,7 @@ import ReactDOMServer from 'react-dom/server';
 import { type RouteName, route } from 'ziggy-js';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME ?? 'Laravel';
 
 createServer((page) =>
 	createInertiaApp({
