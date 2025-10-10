@@ -38,8 +38,8 @@ export default function Profile({
 	const { data, setData, patch, errors, processing, recentlySuccessful } = useForm<
 		Required<ProfileForm>
 	>({
-		name: auth.user.name,
-		email: auth.user.email,
+		name: auth.user?.name ?? '',
+		email: auth.user?.email ?? '',
 	});
 
 	const submit: FormEventHandler = (e) => {
@@ -95,7 +95,7 @@ export default function Profile({
 							<InputError className="mt-2" message={errors.email} />
 						</div>
 
-						{mustVerifyEmail && auth.user.email_verified_at === null && (
+						{mustVerifyEmail && auth.user?.email_verified_at === null && (
 							<div>
 								<p className="text-muted-foreground -mt-4 text-sm">
 									{t('settings.profile.email_unverified')}{' '}
