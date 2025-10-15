@@ -115,7 +115,7 @@ export default function Dashboard({ stats, token }: DashboardProps) {
 								{Object.entries(stats.users.by_role).map(([role, count]) => (
 									<div key={role} className="flex items-center">
 										<div className="flex-1 space-y-1">
-											<p className="text-sm font-medium leading-none">
+											<p className="text-sm leading-none font-medium">
 												{t(`roles.${role}`)}
 											</p>
 											<p className="text-muted-foreground text-sm">
@@ -143,7 +143,7 @@ export default function Dashboard({ stats, token }: DashboardProps) {
 								{stats.recent_users.map((user) => (
 									<div key={user.id} className="flex items-center">
 										<div className="space-y-1">
-											<p className="text-sm font-medium leading-none">
+											<p className="text-sm leading-none font-medium">
 												{user.name}
 											</p>
 											<p className="text-muted-foreground text-sm">

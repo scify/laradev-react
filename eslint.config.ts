@@ -6,11 +6,6 @@ import globals from 'globals';
 import * as tseslint from 'typescript-eslint';
 
 /** @type {Linter.Config[]} */
-// Add a declare for the global route function for TypeScript
-declare global {
-	function route(name: string, params?: Record<string, any>): string;
-}
-
 export default tseslint.config(
 	// JavaScript base config
 	js.configs.recommended,

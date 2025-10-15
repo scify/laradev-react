@@ -19,7 +19,7 @@ export default function AuthCardLayout({
 					className="flex items-center gap-2 self-center font-medium"
 				>
 					<div className="flex items-center gap-6">
-						<div className="h-22 w-22 flex items-center justify-center rounded-md">
+						<div className="flex h-22 w-22 items-center justify-center rounded-md">
 							<AppLogoIcon className="size-22 h-22 fill-current text-[var(--foreground)] dark:text-white" />
 						</div>
 					</div>
@@ -27,7 +27,7 @@ export default function AuthCardLayout({
 
 				<div className="flex flex-col gap-6">
 					<Card className="rounded-xl">
-						<CardHeader className="px-10 pb-0 pt-8 text-center">
+						<CardHeader className="px-10 pt-8 pb-0 text-center">
 							<CardTitle className="text-2xl">{title}</CardTitle>
 							<CardDescription>{description}</CardDescription>
 						</CardHeader>

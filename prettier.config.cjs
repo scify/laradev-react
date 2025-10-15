@@ -38,8 +38,4 @@ module.exports = {
 
 	// Plugins for additional formatting rules
 	plugins: ['prettier-plugin-tailwindcss'],
-
-	// TailwindCSS integration
-	tailwindStylesheet: './resources/scss/app.scss',
-	tailwindConfig: './tailwind.config.js',
 };

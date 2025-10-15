@@ -199,7 +199,7 @@ export default function Login({
 								<Label htmlFor="remember">{t('auth.login.remember')}</Label>
 							</div>
 
-							<div className="mb-1 mt-2 flex justify-start">
+							<div className="mt-2 mb-1 flex justify-start">
 								<altcha-widget
 									id="altcha-widget"
 									hidelogo
