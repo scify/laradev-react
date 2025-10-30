@@ -36,3 +36,5 @@ coverage/
 
 # Gitleaks binary (should be installed locally)
 gitleaks
+
+.claude/
