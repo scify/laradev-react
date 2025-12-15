@@ -28,7 +28,6 @@ yarn-error.log
 .env.ddev
 .env.native
 
-CLAUDE.md
 coverage/
 
 # ziggy generated files
