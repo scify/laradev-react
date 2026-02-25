@@ -18,8 +18,8 @@ test('allows access for allowed origin header', function (): void {
         'HTTP_ORIGIN' => 'https://my-frontend.com',
     ]);
 
-    $middleware = new \App\Http\Middleware\RestrictApiAccess;
-    $next = fn ($request): \Symfony\Component\HttpFoundation\Response => new Response('OK');
+    $middleware = new RestrictApiAccess();
+    $next = fn ($request): Response => new Response('OK');
 
     // Act
     $response = $middleware->handle($request, $next);
@@ -35,8 +35,8 @@ test('denies access for unauthorized IP', function (): void {
     $request = Request::create('/api/test', 'GET');
     $request->server->set('REMOTE_ADDR', '10.0.0.1');
 
-    $middleware = new RestrictApiAccess;
-    $next = (fn ($request): \Symfony\Component\HttpFoundation\Response => new Response('OK'));
+    $middleware = new RestrictApiAccess();
+    $next = (fn ($request): Response => new Response('OK'));
 
     // Act
     $response = $middleware->handle($request, $next);
@@ -54,8 +54,8 @@ test('handles empty allowed IPs config', function (): void {
     $request = Request::create('/api/test', 'GET');
     $request->server->set('REMOTE_ADDR', '127.0.0.1');
 
-    $middleware = new RestrictApiAccess;
-    $next = (fn ($request): \Symfony\Component\HttpFoundation\Response => new Response('OK'));
+    $middleware = new RestrictApiAccess();
+    $next = (fn ($request): Response => new Response('OK'));
 
     // Act
     $response = $middleware->handle($request, $next);

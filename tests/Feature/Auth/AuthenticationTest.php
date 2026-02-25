@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 use App\Enums\RolesEnum;
 use App\Models\User;
+use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function (): void {
     // Run the role seeder first
-    $this->seed(\Database\Seeders\RolesAndPermissionsSeeder::class);
+    $this->seed(RolesAndPermissionsSeeder::class);
 
     // Define login route for all tests
     $this->loginRoute = '/login';

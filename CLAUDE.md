@@ -90,14 +90,14 @@ Version must be updated in two places:
 
 ## Local Development
 
-**IMPORTANT**: This project uses **DDEV** for local development.
+**First, check `APP_DEVELOPMENT_ENV` in `.env`** — this determines how all commands must be run:
 
-**ALL commands MUST be run through DDEV locally.** Always prefix commands with `ddev`.
+| `.env` value | How to run commands |
+|---|---|
+| `"ddev"` | Prefix with `ddev`: `ddev composer ...`, `ddev npm ...`, `ddev artisan ...`, `ddev exec vendor/bin/...` |
+| `"native"` | Run directly: `composer ...`, `npm ...`, `php artisan ...`, `vendor/bin/...` |
 
-**Standard DDEV commands:**
-- `ddev composer install` (NOT `composer install`)
-- `ddev npm install` (NOT `npm install`)
-- `ddev artisan migrate` (NOT `php artisan migrate`)
+Commands in this document are shown in **DDEV form**. Strip the `ddev` prefix (and replace `ddev exec vendor/bin/` → `vendor/bin/`, `ddev artisan` → `php artisan`) when running natively.
 
 **PREFER composer scripts instead of using npm or tools directly:**
 - `ddev composer dev` — Start dev server (auto-detects DDEV vs local)
@@ -170,10 +170,17 @@ Usual workflow after making changes:
 - `ddev npm run test:watch` — Jest in watch mode
 
 **Coverage (requires Xdebug):**
+
+DDEV:
 ```bash
 ddev xdebug on
 ddev exec "XDEBUG_MODE=coverage vendor/bin/pest --coverage --coverage-filter=app/Path/To/Class.php"
 ddev xdebug off
+```
+
+Native (Xdebug must already be installed and configured in `php.ini`):
+```bash
+XDEBUG_MODE=coverage vendor/bin/pest --coverage --coverage-filter=app/Path/To/Class.php
 ```
 
 **MANDATORY: Before touching, altering, editing, or adding ANY tests, you MUST read `tests/README.md` first.** No exceptions.

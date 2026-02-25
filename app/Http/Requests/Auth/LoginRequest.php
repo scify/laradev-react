@@ -33,14 +33,14 @@ class LoginRequest extends FormRequest {
             'password' => ['required', 'string'],
             'captcha' => app()->environment('testing')
                 ? ['required'] // skip 'captcha' rule in tests
-                : ['required', new ValidAltcha],
+                : ['required', new ValidAltcha()],
         ];
     }
 
     /**
      * Attempt to authenticate the request's credentials.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function authenticate(): void {
         $this->ensureIsNotRateLimited();
@@ -59,7 +59,7 @@ class LoginRequest extends FormRequest {
     /**
      * Ensure the login request is not rate limited.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function ensureIsNotRateLimited(): void {
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {

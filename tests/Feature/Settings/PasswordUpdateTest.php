@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Enums\RolesEnum;
 use App\Models\User;
+use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 
@@ -11,7 +12,7 @@ uses(RefreshDatabase::class);
 
 beforeEach(function (): void {
     // Run the role seeder first
-    $this->seed(\Database\Seeders\RolesAndPermissionsSeeder::class);
+    $this->seed(RolesAndPermissionsSeeder::class);
 });
 
 test('password can be updated', function (): void {

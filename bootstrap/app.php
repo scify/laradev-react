@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 use App\Http\Middleware\AddSecurityHeaders;
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\RestrictApiAccess;
+use Dotenv\Dotenv;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
+use Illuminate\Http\Middleware\TrustProxies;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Support\Env;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 // Only load .env if APP_ENV isn't already set
 if (getenv('APP_ENV') !== 'testing') {
     // Step 1: Load the main .env file
-    $dotenv = Dotenv\Dotenv::createMutable(dirname(__DIR__));
+    $dotenv = Dotenv::createMutable(dirname(__DIR__));
     $dotenv->load();
 
     // Step 2: Only load additional .env file if APP_DEVELOPMENT_ENV is set
@@ -28,7 +32,7 @@ if (getenv('APP_ENV') !== 'testing') {
         $additionalEnvPath = dirname(__DIR__) . ('/' . $additionalEnvFile);
 
         if (file_exists($additionalEnvPath)) {
-            $dotenv = Dotenv\Dotenv::createMutable(dirname(__DIR__), $additionalEnvFile);
+            $dotenv = Dotenv::createMutable(dirname(__DIR__), $additionalEnvFile);
             $dotenv->load();
         }
     }
@@ -44,7 +48,7 @@ $app = Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->append([
-            \Illuminate\Http\Middleware\TrustProxies::class,
+            TrustProxies::class,
         ]);
 
         // Web middleware
@@ -61,17 +65,17 @@ $app = Application::configure(basePath: dirname(__DIR__))
                 AddSecurityHeaders::class,
             ]);
 
-            $aliases['api.restrict'] = \App\Http\Middleware\RestrictApiAccess::class;
+            $aliases['api.restrict'] = RestrictApiAccess::class;
 
             $middleware->group('api', [
-                \App\Http\Middleware\RestrictApiAccess::class,
+                RestrictApiAccess::class,
             ]);
         }
 
         $middleware->alias($aliases);
 
         $middleware->api([
-            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
+            ThrottleRequests::class . ':api',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
@@ -93,7 +97,7 @@ $app = Application::configure(basePath: dirname(__DIR__))
             // Don't return anything to let Laravel handle it
         });
 
-        $exceptions->render(function (\Exception $exception, Request $request) {
+        $exceptions->render(function (Exception $exception, Request $request) {
             if ($request->is('api/*')) {
                 $status = $exception->getCode() ?: 500;
 

@@ -10,6 +10,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolesAndPermissionsSeeder extends Seeder {
     use WithoutModelEvents;
@@ -24,21 +25,21 @@ class RolesAndPermissionsSeeder extends Seeder {
          */
 
         // flush cache before creating roles and permissions
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 
         // Create permissions
         $permissions = collect(PermissionsEnum::cases())
-            ->map(fn ($permission) => Permission::firstOrCreate(['name' => $permission->value]));
+            ->map(fn ($permission) => Permission::query()->firstOrCreate(['name' => $permission->value]));
 
         // Create roles and assign permissions
-        $adminRole = Role::create(['name' => RolesEnum::ADMINISTRATOR->value]);
+        Role::create(['name' => RolesEnum::ADMINISTRATOR->value]);
 
         // create roles using RolesEnum
-        $admin_role = Role::firstOrCreate(['name' => RolesEnum::ADMINISTRATOR->value, 'guard_name' => 'web']);
-        $user_manager_role = Role::firstOrCreate(['name' => RolesEnum::USER_MANAGER->value, 'guard_name' => 'web']);
-        Role::firstOrCreate(['name' => RolesEnum::REGISTERED_USER->value, 'guard_name' => 'web']);
+        $admin_role = Role::query()->firstOrCreate(['name' => RolesEnum::ADMINISTRATOR->value, 'guard_name' => 'web']);
+        $user_manager_role = Role::query()->firstOrCreate(['name' => RolesEnum::USER_MANAGER->value, 'guard_name' => 'web']);
+        Role::query()->firstOrCreate(['name' => RolesEnum::REGISTERED_USER->value, 'guard_name' => 'web']);
         // flush cache after creating roles and permissions
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 
         // assign permissions to roles
         $user_manager_role->givePermissionTo([

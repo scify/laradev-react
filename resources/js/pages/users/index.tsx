@@ -1,5 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
-import { PageProps, User, Auth } from '@/types/index.d';
+import { PageProps, User, Auth } from '@/types/index';
 import { Link, Head, usePage, useForm } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import {
