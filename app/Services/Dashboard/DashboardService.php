@@ -34,7 +34,7 @@ class DashboardService {
     }
 
     private function getActiveUsers(): int {
-        return User::count();
+        return User::query()->count();
     }
 
     private function getDeletedUsers(): int {
@@ -46,20 +46,19 @@ class DashboardService {
      */
     private function getUsersByRole(): array {
         return collect(RolesEnum::cases())->mapWithKeys(fn (RolesEnum $rolesEnum): array => [
-            $rolesEnum->value => User::role($rolesEnum->value)->count(),
+            $rolesEnum->value => User::query()->role($rolesEnum->value)->count(),
         ])->toArray();
     }
 
     private function getRecentUsers(int $days): int {
-        return User::where('created_at', '>=', now()->subDays($days))->count();
+        return User::query()->where('created_at', '>=', now()->subDays($days))->count();
     }
 
     /**
      * @return Collection<int, array{id: int, name: string, email: string, created_at: Carbon, role: string|null}>
      */
     private function getRecentUsersList(): Collection {
-        return User::with('roles')
-            ->orderBy('created_at', 'desc')
+        return User::with('roles')->latest()
             ->take(5)
             ->get()
             ->map(function ($user): array {

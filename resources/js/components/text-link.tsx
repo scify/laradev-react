@@ -2,10 +2,19 @@ import { Link } from '@inertiajs/react';
 import { cn } from '@/lib/utils';
 import React from 'react';
 
-interface TextLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+// Explicit interface — avoids AnchorHTMLAttributes conflicting with Inertia Link event types
+interface TextLinkProps {
 	href: string;
 	children: React.ReactNode;
 	className?: string;
+	// MouseEventHandler<Element> is compatible with both <a> and Inertia's <Link> onClick types
+	onClick?: React.MouseEventHandler;
+	id?: string;
+	'aria-label'?: string;
+	rel?: string;
+	target?: React.HTMLAttributeAnchorTarget;
+	download?: boolean | string;
+	tabIndex?: number;
 }
 
 export default function TextLink({ href, children, className, ...props }: TextLinkProps) {

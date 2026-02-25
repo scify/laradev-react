@@ -89,7 +89,7 @@ test('store creates new user', function (): void {
 
     $response->assertRedirect(route('users.index'));
 
-    $user = User::where('email', 'test@example.com')->first();
+    $user = User::query()->where('email', 'test@example.com')->first();
 
     expect($user)
         ->name->toBe('Test User')
@@ -113,7 +113,7 @@ test('user manager cannot modify admin', function (): void {
 
     $response->assertStatus(403);
 
-    expect(User::find($adminToModify->id))
+    expect(User::query()->find($adminToModify->id))
         ->name->not->toBe('Updated Name');
 });
 
@@ -132,5 +132,5 @@ test('soft deletes user', function (): void {
     test()->assertSoftDeleted('users', ['id' => $user->id]);
 
     expect(User::withTrashed()->find($user->id))->not->toBeNull()
-        ->and(User::find($user->id))->toBeNull();
+        ->and(User::query()->find($user->id))->toBeNull();
 });

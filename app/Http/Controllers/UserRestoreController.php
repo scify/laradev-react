@@ -21,7 +21,7 @@ class UserRestoreController extends Controller {
 
         $this->userService->restore($user);
 
-        return redirect()->route('users.index')
+        return to_route('users.index')
             ->with('success', __('users.messages.restored'));
     }
 }

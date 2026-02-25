@@ -1,7 +1,7 @@
 name: laradev-react
 type: laravel
 docroot: public
-php_version: '8.3'
+php_version: '8.4'
 webserver_type: nginx-fpm
 router_http_port: '8080'
 router_https_port: '8443'
@@ -15,7 +15,7 @@ use_dns_when_possible: true
 timezone: Europe/Berlin
 composer_version: '2'
 web_environment: []
-nodejs_version: 22.13.1
+nodejs_version: '24'
 corepack_enable: false
 web_extra_exposed_ports:
     - name: vite

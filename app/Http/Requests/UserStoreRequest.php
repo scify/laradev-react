@@ -7,6 +7,7 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rules\Password;
 
 class UserStoreRequest extends FormRequest {
     public function authorize(): bool {
@@ -20,7 +21,7 @@ class UserStoreRequest extends FormRequest {
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'confirmed', Password::defaults()],
             'role' => ['required', 'string', 'exists:roles,name'],
         ];
     }

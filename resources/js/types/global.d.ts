@@ -1,5 +1,6 @@
 import type { route as routeFn } from 'ziggy-js';
 
 declare global {
-    const route: typeof routeFn;
+    // var (not const) so the SSR entry point can assign global.route
+    var route: typeof routeFn;
 }

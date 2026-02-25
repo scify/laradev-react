@@ -6,6 +6,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class UserUpdateRequest extends FormRequest {
     public function authorize(): bool {
@@ -19,7 +20,7 @@ class UserUpdateRequest extends FormRequest {
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', Rule::unique('users')->ignore($this->user)],
-            'password' => ['sometimes', 'string', 'min:8', 'confirmed'],
+            'password' => ['sometimes', 'confirmed', Password::defaults()],
             'role' => ['required', 'string', 'exists:roles,name'],
         ];
     }

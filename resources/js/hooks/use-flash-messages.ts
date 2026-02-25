@@ -1,16 +1,10 @@
 import { usePage } from '@inertiajs/react';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
-
-interface Flash {
-	success?: string;
-	error?: string;
-	warning?: string;
-	info?: string;
-}
+import { type SharedData } from '@/types';
 
 export function useFlashMessages() {
-	const { flash } = usePage().props as unknown as { flash: Flash };
+	const { flash } = usePage<SharedData>().props;
 
 	useEffect(() => {
 		if (flash.success) {

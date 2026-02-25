@@ -1,5 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem, PageProps, RolesEnum } from '@/types';
+import { type BreadcrumbItem, RolesEnum } from '@/types';
 import { Head } from '@inertiajs/react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, ShieldCheck, Clock } from 'lucide-react';
@@ -7,7 +7,7 @@ import { useTranslations } from '@/hooks/use-translations';
 import { formatDate } from '@/utils/format';
 import { useEffect } from 'react';
 
-interface DashboardProps extends PageProps {
+interface DashboardProps {
 	stats: DashboardStats;
 	token?: string;
 }

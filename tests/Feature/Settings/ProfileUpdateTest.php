@@ -81,7 +81,7 @@ test('user can delete their account', function (): void {
     // Verify soft deletion
     test()->assertSoftDeleted('users', ['id' => $user->id]);
     expect(User::withTrashed()->find($user->id))->not->toBeNull()
-        ->and(User::find($user->id))->toBeNull();
+        ->and(User::query()->find($user->id))->toBeNull();
 });
 
 test('correct password must be provided to delete account', function (): void {

@@ -9,7 +9,7 @@
 	],
 	"license": "MIT",
 	"require": {
-		"php": "^8.2",
+		"php": "^8.4",
 		"anhskohbo/no-captcha": "^3.7",
 		"grantholle/laravel-altcha": "^1.2",
 		"inertiajs/inertia-laravel": "^2.0",
@@ -33,6 +33,7 @@
 		"pestphp/pest": "^4.0",
 		"pestphp/pest-plugin-laravel": "^4.0",
 		"pestphp/pest-plugin-type-coverage": "^4.0",
+		"driftingly/rector-laravel": "^2.1",
 		"rector/rector": "^2.0"
 	},
 	"autoload": {
@@ -65,30 +66,61 @@
 		],
 		"dev": [
 			"Composer\\Config::disableProcessTimeout",
-			"npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite"
+			"@php -r \"passthru('composer ' . (getenv('IS_DDEV_PROJECT') === 'true' ? 'dev:ddev' : 'dev:serve') . ' --ansi');\""
+		],
+		"dev:serve": [
+			"Composer\\Config::disableProcessTimeout",
+			"npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite --kill-others"
+		],
+		"dev:ddev": [
+			"Composer\\Config::disableProcessTimeout",
+			"npx concurrently -c \"#c4b5fd,#fb7185,#fdba74\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=queue,logs,vite --kill-others"
 		],
 		"dev:ssr": [
+			"Composer\\Config::disableProcessTimeout",
+			"@php -r \"passthru('composer ' . (getenv('IS_DDEV_PROJECT') === 'true' ? 'dev:ddev:ssr' : 'dev:serve:ssr') . ' --ansi');\""
+		],
+		"dev:serve:ssr": [
 			"npm run build:ssr",
 			"Composer\\Config::disableProcessTimeout",
-			"npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"php artisan inertia:start-ssr\" --names=server,queue,logs,ssr"
+			"npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"php artisan inertia:start-ssr\" --names=server,queue,logs,ssr --kill-others"
+		],
+		"dev:ddev:ssr": [
+			"npm run build:ssr",
+			"Composer\\Config::disableProcessTimeout",
+			"npx concurrently -c \"#c4b5fd,#fb7185,#fdba74\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"php artisan inertia:start-ssr\" --names=queue,logs,ssr --kill-others"
 		],
 		"post-install-cmd": [
 			"bash tools/git-hooks/install.sh"
 		],
-		"test": "vendor/bin/pest",
-		"test:coverage": "vendor/bin/pest --coverage",
+		"update:requirements": [
+			"composer bump",
+			"npx npm-check-updates -u"
+		],
 		"lint": [
+			"rector",
+			"pint --parallel",
+			"npm run lint:fix",
+			"npm run lint:styles:fix",
+			"npm run format"
+		],
+		"test:lint": [
+			"pint --parallel --test",
+			"rector --dry-run",
 			"npm run lint",
 			"npm run lint:styles",
-			"npm run format:check",
-			"vendor/bin/phpstan analyse --memory-limit=2G --configuration=phpstan.neon",
-			"vendor/bin/rector --dry-run"
+			"npm run format:check"
 		],
-		"format": [
-			"npm run format",
-			"vendor/bin/pint --parallel",
-			"vendor/bin/rector"
-		]
+		"test:types": [
+			"phpstan analyse --memory-limit=2G",
+			"npm run types"
+		],
+		"test": [
+			"@test:lint",
+			"@test:types",
+			"pest"
+		],
+		"test:coverage": "pest --coverage"
 	},
 	"extra": {
 		"laravel": {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { RolesEnum } from '@/types';
 import Dashboard from '../dashboard';
 
 // Mock the AppLayout component
@@ -56,7 +57,7 @@ const mockStats = {
 			name: 'Test User',
 			email: 'test@example.com',
 			created_at: '2025-04-01T00:00:00.000Z',
-			role: 'admin',
+			role: RolesEnum.ADMINISTRATOR,
 		},
 	],
 };

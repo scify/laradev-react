@@ -42,6 +42,21 @@
 		},
 		"increment_style": {
 			"style": "pre"
+		},
+		"declare_strict_types": true,
+		"global_namespace_import": {
+			"import_classes": true,
+			"import_constants": true,
+			"import_functions": true
+		},
+		"mb_str_functions": true,
+		"modernize_types_casting": true,
+		"date_time_immutable": true,
+		"protected_to_private": true,
+		"strict_comparison": true,
+		"ordered_class_elements": true,
+		"visibility_required": {
+			"elements": ["method", "property"]
 		}
 	}
 }

@@ -16,7 +16,7 @@ class UserService {
         $role = $data['role'] ?? RolesEnum::REGISTERED_USER->value;
         unset($data['role']);
 
-        $user = User::create($data);
+        $user = User::query()->create($data);
         $user->syncRoles([$role]);
 
         return $user;
@@ -46,7 +46,7 @@ class UserService {
     }
 
     public function findByEmail(string $email): ?User {
-        return User::where('email', $email)->first();
+        return User::query()->where('email', $email)->first();
     }
 
     /**
@@ -84,7 +84,7 @@ class UserService {
         // If user is not admin, further filter available roles
         if (! $user->hasRole(RolesEnum::ADMINISTRATOR->value)) {
             $roles = $roles->filter(
-                fn (RolesEnum $rolesEnum): bool => $rolesEnum->value == RolesEnum::USER_MANAGER->value
+                fn (RolesEnum $rolesEnum): bool => $rolesEnum->value === RolesEnum::USER_MANAGER->value
             );
         }
 

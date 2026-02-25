@@ -20,7 +20,7 @@ class AuthenticatedSessionController extends Controller {
     public function create(Request $request): InertiaResponse|RedirectResponse {
         if (auth()->check()) {
             // User is already logged in, redirect to dashboard
-            return redirect()->route(route: 'home');
+            return to_route(route: 'home');
         }
 
         return Inertia::render('auth/login', [
@@ -43,7 +43,7 @@ class AuthenticatedSessionController extends Controller {
         $loginRequest->authenticate();
         $loginRequest->session()->regenerate();
 
-        return redirect()->route('dashboard');
+        return to_route('dashboard');
     }
 
     /**

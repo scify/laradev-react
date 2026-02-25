@@ -32,9 +32,13 @@ class HandleInertiaRequests extends Middleware {
 
         return [
             ...parent::share($request),
-            'appName' => config('app.name'),
-            'locale' => app()->getLocale(),
-            'quote' => ['message' => trim($message ?? ''), 'author' => trim($author ?? '')],
+            'app' => [
+                'name' => config()->string('app.name'),
+                'version' => config()->string('app.version'),
+                'env' => config()->string('app.env'),
+                'locale' => app()->getLocale(),
+            ],
+            'quote' => ['message' => mb_trim($message ?? ''), 'author' => mb_trim($author ?? '')],
             'translations' => fn (): array => [
                 'auth' => trans('auth'),
                 'pagination' => trans('pagination'),
@@ -69,11 +73,11 @@ class HandleInertiaRequests extends Middleware {
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
-            'flash' => [
-                'success' => session('success'),
-                'error' => session('error'),
-                'warning' => session('warning'),
-                'info' => session('info'),
+            'flash' => fn (): array => [
+                'success' => $request->session()->get('success'),
+                'error' => $request->session()->get('error'),
+                'warning' => $request->session()->get('warning'),
+                'info' => $request->session()->get('info'),
             ],
         ];
     }

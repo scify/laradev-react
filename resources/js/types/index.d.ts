@@ -43,9 +43,22 @@ export interface NavItem {
     onClick?: MouseEventHandler;
 }
 
+export interface AppData {
+    name: string;
+    version: string;
+    env: string;
+    locale: string;
+}
+
 export interface SharedData {
-    appName: string;
+    app: AppData;
     quote: { message: string; author: string };
+    flash: {
+        success: string | null;
+        error: string | null;
+        warning: string | null;
+        info: string | null;
+    };
     auth: Auth;
     ziggy: Config & { location: string };
     [key: string]: unknown;
