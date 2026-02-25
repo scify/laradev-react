@@ -80,8 +80,8 @@ test('store creates new user', function (): void {
     $userData = [
         'name' => 'Test User',
         'email' => 'test@example.com',
-        'password' => 'password',
-        'password_confirmation' => 'password',
+        'password' => 'password123',
+        'password_confirmation' => 'password123',
         'role' => RolesEnum::REGISTERED_USER->value,
         '_token' => session('_token'),
     ];

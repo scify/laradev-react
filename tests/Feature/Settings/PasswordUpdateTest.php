@@ -26,15 +26,15 @@ test('password can be updated', function (): void {
         ->from($url)
         ->put($url, [
             'current_password' => 'password',
-            'password' => 'new-password',
-            'password_confirmation' => 'new-password',
+            'password' => 'new-password123',
+            'password_confirmation' => 'new-password123',
             '_token' => session('_token'),
         ]);
 
     $response->assertSessionHasNoErrors();
     $response->assertRedirect($url);
 
-    expect(Hash::check('new-password', $user->refresh()->password))->toBeTrue();
+    expect(Hash::check('new-password123', $user->refresh()->password))->toBeTrue();
 });
 
 test('correct password must be provided to update password', function (): void {
