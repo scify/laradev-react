@@ -29,7 +29,7 @@ The configuration includes intelligent allowlisting for:
 
 - Example configuration files (`.env.example`, `.env.ddev.example`, etc.)
 - Testing environments (`.env.testing`)
-- Documentation files (`LOCAL-DEVELOPMENT.md`)
+- Documentation files (`docs/LOCAL-DEVELOPMENT.md`)
 - Template files (`.github/templates/.env.j2`)
 - Deployment scripts (`azure/deploy-laravel-to-azure.sh`)
 - Common development values (`db`, `test`, `localhost`, etc.)
@@ -65,7 +65,7 @@ The configuration includes intelligent allowlisting for:
 
 ```bash
 # Download Gitleaks binary
-curl -sSL https://github.com/gitleaks/gitleaks/releases/download/v8.28.0/gitleaks_8.28.0_linux_x64.tar.gz | tar -xz
+curl -sSL https://github.com/gitleaks/gitleaks/releases/download/v8.28.0/gitleaks_8.28.0_linux_x64.tar.gz | tar -xz gitleaks
 
 # Install pre-commit hooks
 ./tools/git-hooks/install.sh
@@ -259,7 +259,7 @@ Check the GitHub Actions logs and ensure the configuration file is valid.
 ./gitleaks version
 
 # Download latest release
-curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks_linux_x64.tar.gz | tar -xz
+curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks_linux_x64.tar.gz | tar -xz gitleaks
 ```
 
 ### Metrics
